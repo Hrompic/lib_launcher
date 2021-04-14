@@ -1,0 +1,1 @@
+export PATH="$PATH:/home/user/Android/Sdk/ndk/22.0.7026061/toolchains/llvm/prebuilt/linux-x86_64/bin:/home/user/Android/Sdk/build-tools/30.0.2:/home/user/Android/Sdk/platform-tools"
