@@ -7,7 +7,7 @@ PATHCLS:=$(shell echo $(pkgname)|sed 's/\./\//g')
 LIBNAME=libmain.so
 
 alib:
-	aarch64-linux-android28-clang 1.c -llog -shared -o lib/$(ARCH)/$(LIBNAME)
+	aarch64-linux-android28-clang++ 1.cpp -llog -g -shared -o lib/$(ARCH)/$(LIBNAME)
 	$(MAKE) rlib
 
 init:
