@@ -1,3 +1,4 @@
+.PHONY: lib
 SDK=/home/user/Android/Sdk/
 SDKV=23
 JAVAC=/usr/lib/jvm/java-8-openjdk-amd64/bin/javac
@@ -9,6 +10,9 @@ LIBNAME=libmain.so
 alib:
 	aarch64-linux-android28-clang++ 1.cpp -llog -g -shared -o lib/$(ARCH)/$(LIBNAME)
 	$(MAKE) rlib
+
+lib:
+	aarch64-linux-android28-clang++ 1.cpp -llog -g -shared -o 2.so
 
 init:
 ifeq (,$(wildcard ./gen)) 
