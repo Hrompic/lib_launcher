@@ -11,8 +11,10 @@ alib:
 	aarch64-linux-android28-clang++ 1.cpp -llog -g -shared -o lib/$(ARCH)/$(LIBNAME)
 	$(MAKE) rlib
 
-lib:
-	aarch64-linux-android28-clang++ 1.cpp -llog -g -shared -o 2.so
+lib: 3lib
+	aarch64-linux-android28-clang++ 2.cpp -llog -g -shared -Wl, -rpath /data/data/com.termux/files/home/ -l3 -L. -o 2.so
+3lib:
+	aarch64-linux-android28-clang++ 3.cpp -llog -g -shared -o lib3.so
 
 init:
 ifeq (,$(wildcard ./gen)) 

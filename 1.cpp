@@ -33,6 +33,11 @@ void ANativeActivity_onCreate(ANativeActivity* activity, void* savedState, size_
     fprintf(a, "123123");
     fclose(a);
     //void *lib = dlopen("/storage/emulated/0/temp/2.so", RTLD_NOW | RTLD_GLOBAL);
+/*    void *l = dlopen("/data/data/com.termux/files/home/lib3.so", RTLD_NOW | RTLD_GLOBAL);
+    if(!l)
+    {
+        LOGE("dlopen(\"%s\"): %s", "lib3.so", dlerror());
+    }*/
     void *lib = dlopen("/data/data/com.termux/files/home/2.so", RTLD_NOW | RTLD_GLOBAL);
     if(!lib)
     {
