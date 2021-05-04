@@ -1,20 +1,20 @@
 .PHONY: lib
 SDK=/home/user/Android/Sdk/
 SDKV=23
-JAVAC=/usr/lib/jvm/java-8-openjdk-amd64/bin/javac
-ARCH=arm64-v8a
+JAVAC=ecj #/usr/lib/jvm/java-8-openjdk-amd64/bin/javac
+ARCH=armeabi-v7a
 pkgname=$(shell grep -o "package=.*" AndroidManifest.xml | cut -d\" -f2)
 PATHCLS:=$(shell echo $(pkgname)|sed 's/\./\//g')
 LIBNAME=libmain.so
 
 alib:
-	aarch64-linux-android28-clang++ 1.cpp -llog -g -shared -o lib/$(ARCH)/$(LIBNAME)
+	clang++ 1.cpp -llog -g -shared -o lib/$(ARCH)/$(LIBNAME)
 	$(MAKE) rlib
 
 lib: 3lib
-	aarch64-linux-android28-clang++ 2.cpp -llog -g -shared -Wl, -rpath /data/data/com.termux/files/home/ -l3 -L. -o 2.so
+	clang++ 2.cpp -llog -g -shared -Wl, -rpath /data/data/com.termux/files/home/ -l3 -L. -o 2.so
 3lib:
-	aarch64-linux-android28-clang++ 3.cpp -llog -g -shared -o lib3.so
+	clang++ 3.cpp -llog -g -shared -o lib3.so
 
 init:
 ifeq (,$(wildcard ./gen)) 
@@ -27,10 +27,10 @@ ifeq (,$(wildcard ./assets))
 	mkdir assets
 endif
 	#@echo $(pkgname) $(PATHCLS)
-	aapt package -f -m -M AndroidManifest.xml -S res/ -J gen -I $(SDK)/platforms/android-$(SDKV)/android.jar
+	aapt package -f -m -M AndroidManifest.xml -S res/ -J gen 
 	$(JAVAC) -d obj -cp obj -bootclasspath $(SDK)/platforms/android-$(SDKV)/android.jar gen/$(PATHCLS)/* #with java 11 not working
 	dx --dex --output=./classes.dex obj
-	aapt package -f -m -F app.apk -A assets/ -M AndroidManifest.xml -S res/ -I $(SDK)/platforms/android-$(SDKV)/android.jar
+	aapt package -f -m -F app.apk -A assets/ -M AndroidManifest.xml -S res/ #-I $(SDK)/platforms/android-$(SDKV)/android.jar
 	aapt add app.apk classes.dex lib/$(ARCH)/*
 
 rlib:
